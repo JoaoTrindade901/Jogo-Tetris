@@ -37,19 +37,19 @@ Este projeto é um aplicativo Java Swing. Você precisará ter o **Java Developm
 
 Tetris/
 ├── controller/
-│   └── TetrisController.java       # Gerencia a entrada do usuário e as transições de estado do jogo.
+│ └── TetrisController.java # Gerencia a entrada do usuário e as transições de estado do jogo.
 │
-├── model/                          # Dados e regras do jogo
-│   ├── Board.java                  # Tabuleiro e lógica central (movimento, colisão, linhas, etc.)
-│   ├── Piece.java                  # Representação de uma peça do Tetris.
-│   ├── Tetrominoes.java            # Enum com os formatos das peças (I, O, T, S, Z, J, L).
-│   └── HighScoreManager.java       # Gerencia pontuações e ranking.
+├── model/ # Dados e regras do jogo
+│ ├── Board.java # Tabuleiro e lógica central (movimento, colisão, linhas, etc.)
+│ ├── Piece.java # Representação de uma peça do Tetris.
+│ ├── Tetrominoes.java # Enum com os formatos das peças (I, O, T, S, Z, J, L).
+│ └── HighScoreManager.java # Gerencia pontuações e ranking.
 │
-├── view/                           # Interface gráfica (Swing)
-│   ├── TetrisView.java             # Painel principal: desenha o tabuleiro, status e menus.
-│   └── RetroNameDialog.java        # Diálogo customizado para entrada de nome com estilo retrô.
+├── view/ # Interface gráfica (Swing)
+│ ├── TetrisView.java # Painel principal: desenha o tabuleiro, status e menus.
+│ └── RetroNameDialog.java # Diálogo customizado para entrada de nome com estilo retrô.
 │
-└── Main.java                       # Ponto de entrada do programa.
+└── Main.java # Ponto de entrada do programa.
 
 
 ### 3. Execução (Via Terminal)
