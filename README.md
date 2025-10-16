@@ -11,30 +11,6 @@ Este projeto é um aplicativo Java Swing. Você precisará ter o **Java Developm
 
 ### 2. Estrutura de Arquivos
 
-Certifique-se de que seus arquivos estejam organizados da seguinte forma:
-
-Perdão, o sistema interrompeu a geração do código anterior.
-
-Aqui estão os três arquivos completos que você solicitou (Main.java, view/TetrisView.java, e view/RetroNameDialog.java) e o README.md (separado) para você copiar e colar no seu projeto.
-
-1. README.md
-Salve este conteúdo na pasta raiz do seu projeto como README.md.
-
-Markdown
-
-# 🕹️ Tetris Retro Edition
-
-Uma reimplementação clássica do jogo Tetris, desenvolvida em Java com a biblioteca Swing, focada em entregar uma experiência visual retrô e nostálgica.
-
-## 🚀 Como Executar
-
-Este projeto é um aplicativo Java Swing. Você precisará ter o **Java Development Kit (JDK)** instalado em sua máquina.
-
-### 1. Requisitos
-* JDK 8 ou superior
-
-### 2. Estrutura de Arquivos
-
 ```
 Tetris/
 ├── controller/
