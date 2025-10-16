@@ -35,7 +35,7 @@ Este projeto é um aplicativo Java Swing. Você precisará ter o **Java Developm
 
 ### 2. Estrutura de Arquivos
 
-Tetris/
+```Tetris/
 ├── controller/
 │ └── TetrisController.java # Gerencia a entrada do usuário e as transições de estado do jogo.
 │
@@ -50,6 +50,7 @@ Tetris/
 │ └── RetroNameDialog.java # Diálogo customizado para entrada de nome com estilo retrô.
 │
 └── Main.java # Ponto de entrada do programa.
+```
 
 
 ### 3. Execução (Via Terminal)
