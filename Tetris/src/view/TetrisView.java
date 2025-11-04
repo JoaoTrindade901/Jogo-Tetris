@@ -98,18 +98,15 @@ public class TetrisView extends JPanel {
      * SUBSTITUIÇÃO: Usa RetroNameDialog em vez de JOptionPane para o estilo retro.
      */
     public String getPlayerName() {
-        // Pega a referência ao Frame pai para centralizar o diálogo
         Frame parentFrame = JOptionPane.getFrameForComponent(this);
         
-        // Instancia o diálogo customizado.
         RetroNameDialog dialog = new RetroNameDialog(parentFrame);
-        String name = dialog.getPlayerName(); // Exibe o diálogo e retorna o nome
+        String name = dialog.getPlayerName();
 
         if (name == null || name.trim().isEmpty()) {
             return "JOGADOR";
         }
         
-        // A lógica de formatação já está em RetroNameDialog, mas mantemos uma segurança
         return name.trim().toUpperCase().substring(0, Math.min(name.length(), 10));
     }
     
@@ -186,10 +183,6 @@ public class TetrisView extends JPanel {
         this.setFocusable(true);
     }
 
-    /**
-     * CORREÇÃO: Lógica ajustada para garantir que os botões não fiquem visíveis 
-     * sobre a tela de instruções.
-     */
     public void setGameState(GameState state) {
         this.currentViewState = state;
         
@@ -201,14 +194,12 @@ public class TetrisView extends JPanel {
             if (fallTimer.isRunning()) fallTimer.stop();
         }
         
-        // Torna todos os botões invisíveis por padrão
         if (newGameButton != null) newGameButton.setVisible(false);
         if (pauseButton != null) pauseButton.setVisible(false);
         if (instructionsButton != null) instructionsButton.setVisible(false);
         if (menuButton != null) menuButton.setVisible(false);
 
         if (state == GameState.PLAYING || state == GameState.PAUSED) {
-            // Se o jogo estiver rodando ou pausado, mostrar os botões de controle
             if (newGameButton != null) newGameButton.setVisible(true);
             if (pauseButton != null) {
                 pauseButton.setVisible(true);
@@ -217,12 +208,9 @@ public class TetrisView extends JPanel {
             if (instructionsButton != null) instructionsButton.setVisible(true);
             if (menuButton != null) menuButton.setVisible(true);
         } else if (state == GameState.INSTRUCTIONS) {
-            // NENHUM botão deve ser visível sobre a tela de instruções
-            // A instrução "Pressione I para voltar" já cobre a interação
-            // Os botões permanecem invisíveis pelo default no início do método.
+
         } else if (state == GameState.GAME_OVER) {
-             // Pode-se optar por mostrar os botões ou não aqui. 
-             // Deixando invisível para seguir o padrão da tela de GO que sugere teclas.
+
         }
         
         repaint();
@@ -239,7 +227,6 @@ public class TetrisView extends JPanel {
             return;
         }
 
-        // --- CÁLCULO DE POSICIONAMENTO DINÂMICO ---
         int boardWidth = board.getWidth() * TILE;
         int totalOriginalWidth = boardWidth + PADDING_X * 2 + PANEL_SIDE_WIDTH + PANEL_HORIZONTAL_OFFSET;
         int adjustment = (getWidth() - totalOriginalWidth) / 2; 
@@ -251,23 +238,17 @@ public class TetrisView extends JPanel {
         
         int sidePanelX = boardX + boardWidth + PANEL_HORIZONTAL_OFFSET;
         
-        // --- REPLICANDO O CÁLCULO VERTICAL DO PAINEL LATERAL ---
         int nextPanelHeight = 120;
         int scoreDetailsPanelHeight = 140; 
         
-        // Posição Y onde o grupo de botões deve começar
         int currentY_after_panels = boardY + 
                                     nextPanelHeight + 
                                     PANEL_VERTICAL_SPACING + 
                                     scoreDetailsPanelHeight +
                                     PANEL_VERTICAL_SPACING; 
         
-        // --- CÁLCULO DE POSICIONAMENTO VERTICAL (4 BOTÕES) ---
-        
-        // O início vertical é logo após o Painel de Status
         int buttonY_start = currentY_after_panels; 
         
-        // Posição X para centralizar o botão (140px) no painel de 160px
         int buttonX_center = sidePanelX + (PANEL_SIDE_WIDTH - BUTTON_WIDTH) / 2;
         
         int y_pos_1 = buttonY_start;
@@ -275,12 +256,10 @@ public class TetrisView extends JPanel {
         int y_pos_3 = y_pos_2 + BUTTON_HEIGHT + BUTTON_GROUP_SPACING;
         int y_pos_4 = y_pos_3 + BUTTON_HEIGHT + BUTTON_GROUP_SPACING;
 
-        // ORGANIZAÇÃO VERTICAL
         newGameButton.setBounds(buttonX_center, y_pos_1, BUTTON_WIDTH, BUTTON_HEIGHT);
         pauseButton.setBounds(buttonX_center, y_pos_2, BUTTON_WIDTH, BUTTON_HEIGHT);
         instructionsButton.setBounds(buttonX_center, y_pos_3, BUTTON_WIDTH, BUTTON_HEIGHT);
         menuButton.setBounds(buttonX_center, y_pos_4, BUTTON_WIDTH, BUTTON_HEIGHT);
-        // --- FIM DO CÁLCULO DE POSICIONAMENTO ---
 
         if (currentViewState != GameState.INSTRUCTIONS) {
             drawRetroPanel(g, boardX - 6, boardY - 6, boardW + 12, boardH + 12);
@@ -354,7 +333,6 @@ public class TetrisView extends JPanel {
         g.setColor(new Color(100, 100, 180));
         g.fillRect(frameX + 30, titleY + 70, frameW - 60, 2);
         
-        // HIGHSCORE (Nome e Pontuação)
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(new Color(255, 200, 60)); 
         
@@ -370,7 +348,6 @@ public class TetrisView extends JPanel {
         int scoreX = frameX + (frameW - fmScore.stringWidth(highScoreText)) / 2;
         g.drawString(highScoreText, scoreX, titleY + 190);
         
-        // TEXTO "PRESSIONE" PISCANDO
         if (showStartText) {
             g.setColor(new Color(150, 220, 255));
             g.setFont(new Font("Courier New", Font.BOLD, 20)); 
@@ -425,12 +402,10 @@ public class TetrisView extends JPanel {
                 Tetrominoes shape = board.shapeAt(col, row);
 
                 boolean blinking = false; 
-                // A lógica de piscar para remoção de linhas deve ser implementada aqui se board.isAnimating() for true.
 
                 if (shape != Tetrominoes.NoShape && !blinking) {
                     drawTile(g, ox + col * TILE, oy + row * TILE, shape);
                 } else if (shape != Tetrominoes.NoShape && blinking) {
-                    // Lógica para piscar a linha
                     g.setColor(Color.WHITE);
                     g.fillRect(ox + col * TILE, oy + row * TILE, TILE, TILE);
                     g.setColor(Color.DARK_GRAY);
@@ -470,59 +445,46 @@ public class TetrisView extends JPanel {
         }
     }
 
-    // --- PAINEL LATERAL (STATUS E NEXT) ---
     private void drawSidePanel(Graphics2D g, int x, int y) {
         int currentY = y; 
 
-        // 1. NEXT PIECE (120px)
         int nextPanelHeight = 120;
         drawPanel(g, x, currentY, PANEL_SIDE_WIDTH, nextPanelHeight, "NEXT");
         drawNext(g, x + 10, currentY + 40);
         currentY += nextPanelHeight + PANEL_VERTICAL_SPACING; 
         
-        // 2. PAINEL CONSOLIDADO: JOGADOR, SCORE, HIGH SCORE
         int scoreDetailsPanelHeight = 140; 
         drawPanel(g, x, currentY, PANEL_SIDE_WIDTH, scoreDetailsPanelHeight, "STATUS");
         
-        int textX = x + 10;
+        final int ALIGN_X = x + 10;
         int textY = currentY + 30; 
 
-        // JOGADOR ATUAL
         g.setFont(new Font("Courier New", Font.BOLD, 14));
         g.setColor(new Color(150, 200, 255));
-        g.drawString("JOGADOR:", textX, textY);
+        g.drawString("JOGADOR:", ALIGN_X, textY);
         g.setColor(new Color(100, 255, 100)); 
-        g.drawString(board.getCurrentPlayerName(), textX + 80, textY);
+        g.drawString(board.getCurrentPlayerName(), ALIGN_X + 80, textY);
         textY += 35; 
         
-        // SCORE ATUAL
         g.setFont(new Font("Courier New", Font.BOLD, 14));
         g.setColor(new Color(150, 200, 255));
-        g.drawString("SCORE:", textX, textY);
+        g.drawString("SCORE:", ALIGN_X, textY);
         g.setFont(new Font("Courier New", Font.BOLD, 18));
         g.setColor(Color.WHITE);
-        g.drawString(String.format("%06d", board.getScore()), textX + 70, textY);
+        g.drawString(String.format("%06d", board.getScore()), ALIGN_X + 70, textY);
         textY += 40;
 
-        // HIGH SCORE - Título
         g.setFont(new Font("Courier New", Font.BOLD, 14));
         g.setColor(new Color(255, 200, 60)); 
-        g.drawString("HIGH SCORE:", textX, textY);
-        textY += 20;
-
-        // HIGH SCORE - Nome e Pontuação
-        g.setFont(new Font("Courier New", Font.BOLD, 14));
-        g.setColor(new Color(255, 200, 60)); 
-        g.drawString("NOME:", textX, textY);
-        g.setFont(new Font("Courier New", Font.BOLD, 16));
-        g.drawString(board.getHighScoreName(), textX + 50, textY);
+        g.drawString("HIGH SCORE:", ALIGN_X, textY);
         textY += 25;
         
-        // Se houver LEVEL no seu código, adicione aqui (exemplo:
-        // g.setFont(new Font("Courier New", Font.BOLD, 18));
-        // g.setColor(Color.WHITE);
-        // g.drawString("LEVEL:", textX, currentY + 115);
-        // g.drawString(String.format("%02d", board.getLevel()), textX + 70, currentY + 115);
+        g.setFont(new Font("Courier New", Font.BOLD, 16));
+        g.setColor(new Color(255, 240, 100));
+        
+        String hsLine = String.format("%s - %06d", board.getHighScoreName(), board.getHighScore());
+        
+        g.drawString(hsLine, ALIGN_X, textY);
     }
 
     private void drawPanel(Graphics2D g, int x, int y, int w, int h, String title) {
@@ -583,7 +545,6 @@ public class TetrisView extends JPanel {
         g.setColor(new Color(0, 0, 0, 170));
         g.fillRect(ox, oy, w, h);
         
-        // TÍTULO GAME OVER
         g.setFont(new Font("Courier New", Font.BOLD, 36)); 
         g.setColor(new Color(255, 80, 80));
         String text = "GAME OVER";
@@ -592,7 +553,6 @@ public class TetrisView extends JPanel {
         int tx = ox + (w - fm.stringWidth(text)) / 2;
         g.drawString(text, tx, ty);
         
-        // Score Final
         g.setFont(new Font("Courier New", Font.PLAIN, 20));
         g.setColor(Color.WHITE);
         String finalScore = String.format("PONTUAÇÃO FINAL: %06d", board.getScore());
@@ -600,7 +560,6 @@ public class TetrisView extends JPanel {
         int fsX = ox + (w - fm.stringWidth(finalScore)) / 2;
         g.drawString(finalScore, fsX, ty + 40);
         
-        // High Score
         g.setFont(new Font("Courier New", Font.BOLD, 18));
         g.setColor(new Color(255, 200, 60));
         String hsText = String.format("RECORD: %s %06d", board.getHighScoreName(), board.getHighScore());
@@ -608,7 +567,6 @@ public class TetrisView extends JPanel {
         int hsX = ox + (w - fm.stringWidth(hsText)) / 2;
         g.drawString(hsText, hsX, ty + 70);
 
-        // INSTRUÇÕES 
         g.setFont(new Font("Courier New", Font.PLAIN, 16));
         g.setColor(new Color(180, 180, 180));
 
@@ -668,16 +626,16 @@ public class TetrisView extends JPanel {
         lineY += lineHeight + 5; 
         
         g.setFont(new Font("Courier New", Font.PLAIN, 16));
-        g.drawString("← →     : Mover peça", contentXStart, lineY); lineY += lineHeight;
-        g.drawString("↑       : Girar no sentido horário", contentXStart, lineY); lineY += lineHeight;
-        g.drawString("Z       : Girar no sentido anti-horário", contentXStart, lineY); lineY += lineHeight;
-        g.drawString("↓       : Descer mais rápido", contentXStart, lineY); lineY += lineHeight;
-        g.drawString("ESPAÇO  : Queda instantânea", contentXStart, lineY); lineY += lineHeight + 15; 
+        g.drawString("← → : Mover peça", contentXStart, lineY); lineY += lineHeight;
+        g.drawString("↑ : Girar no sentido horário", contentXStart, lineY); lineY += lineHeight;
+        g.drawString("Z : Girar no sentido anti-horário", contentXStart, lineY); lineY += lineHeight;
+        g.drawString("↓ : Descer mais rápido", contentXStart, lineY); lineY += lineHeight;
+        g.drawString("ESPAÇO : Queda instantânea", contentXStart, lineY); lineY += lineHeight + 15; 
         
-        g.drawString("P       : Pausar/Continuar", contentXStart, lineY); lineY += lineHeight;
-        g.drawString("N       : Novo jogo", contentXStart, lineY); lineY += lineHeight;
-        g.drawString("I       : Mostrar/Esconder instruções", contentXStart, lineY); lineY += lineHeight;
-        g.drawString("M       : Voltar ao Menu Inicial", contentXStart, lineY); lineY += lineHeight + 20;
+        g.drawString("P : Pausar/Continuar", contentXStart, lineY); lineY += lineHeight;
+        g.drawString("N : Novo jogo", contentXStart, lineY); lineY += lineHeight;
+        g.drawString("I : Mostrar/Esconder instruções", contentXStart, lineY); lineY += lineHeight;
+        g.drawString("M : Voltar ao Menu Inicial", contentXStart, lineY); lineY += lineHeight + 20;
         
         g.setFont(new Font("Courier New", Font.BOLD, 18));
         g.drawString("PONTUAÇÃO:", contentXStart, lineY);
